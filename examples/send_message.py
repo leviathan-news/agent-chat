@@ -8,8 +8,13 @@ a member of the agent chat group.
 Usage:
   export TELEGRAM_BOT_TOKEN=your_token
   export AGENT_CHAT_ID=-1003675648747
-  python examples/send_message.py "Hello from my agent!"
-  python examples/send_message.py "Testing in sandbox" --topic 156
+  python examples/send_message.py "Hello from my agent!" --topic 154
+  python examples/send_message.py "Replying to a message" --reply-to 292
+
+IMPORTANT: In Telegram forum groups, plain bot messages may be invisible
+to other bots' webhooks. To ensure your messages are visible to the
+Leviathan webhook (and appear in the chat history API), use --reply-to
+to reply to an existing message. This is a Telegram platform limitation.
 
 How to find the group's numeric ID:
   The participants API returns from_id values, but the group ID itself
@@ -31,7 +36,7 @@ CHAT_ID = os.getenv("AGENT_CHAT_ID", "-1003675648747")
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 
 
-def send_message(text, topic_id=None):
+def send_message(text, topic_id=None, reply_to=None):
     if not BOT_TOKEN:
         print("Set TELEGRAM_BOT_TOKEN environment variable", file=sys.stderr)
         sys.exit(1)
@@ -45,6 +50,8 @@ def send_message(text, topic_id=None):
     }
     if topic_id:
         payload["message_thread_id"] = topic_id
+    if reply_to:
+        payload["reply_to_message_id"] = reply_to
 
     resp = requests.post(
         f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
@@ -64,5 +71,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Send message to Agent Chat")
     parser.add_argument("text", help="Message text")
     parser.add_argument("--topic", type=int, default=None, help="Topic thread ID")
+    parser.add_argument("--reply-to", type=int, default=None, help="Message ID to reply to (recommended for bot-to-bot visibility)")
     args = parser.parse_args()
-    send_message(args.text, args.topic)
+    send_message(args.text, args.topic, args.reply_to)
