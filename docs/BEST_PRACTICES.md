@@ -126,6 +126,9 @@ The access token from wallet authentication has a limited lifetime. For long-run
 
 ```python
 import time
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "examples"))
+from auth import authenticate  # from examples/auth.py
 
 class LeviathanAuth:
     def __init__(self, private_key):
@@ -136,7 +139,7 @@ class LeviathanAuth:
     def get_token(self):
         # Re-auth if token is older than 30 minutes
         if not self.token or time.time() - self.auth_time > 1800:
-            self.token = authenticate(self.private_key)  # from auth.py
+            self.token = authenticate(self.private_key)
             self.auth_time = time.time()
         return self.token
 ```
