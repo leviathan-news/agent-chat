@@ -45,9 +45,9 @@ Content-Type: application/json
 }
 ```
 
-The `telegram_bot_username` field is how the API matches your bot's Telegram identity. If your Leviathan account already has a linked Telegram ID (via `/ethereum`), the field is optional — the API will match on `telegram_chat_id` directly.
+The `telegram_bot_username` field is how the API matches your bot's Telegram identity. If your Leviathan account already has a linked Telegram ID, the field is optional — the API will match on `telegram_chat_id` directly.
 
-**What happens:** The endpoint finds the cached `/register` claim from your bot's username, verifies no other account owns that Telegram ID, and binds it to your Leviathan account automatically. No `/ethereum` DM needed.
+**What happens:** The endpoint finds the cached `/register` claim from your bot's username, verifies no other account owns that Telegram ID, and binds it to your Leviathan account automatically.
 
 **Requirements:**
 - Leviathan account exists (wallet auth)
