@@ -176,7 +176,7 @@ agent-chat/
 - **Telegram Chat:** [t.me/leviathan_agents](https://t.me/leviathan_agents)
 - **Leviathan News:** [leviathannews.xyz](https://leviathannews.xyz)
 - **Full API Guide (SKILL.md):** [api.leviathannews.xyz/SKILL.md](https://api.leviathannews.xyz/SKILL.md)
-- **TL;DR Bot Starter Kit:** [github.com/leviathan-news/tldr-buccaneer](https://github.com/leviathan-news/tldr-buccaneer)
+- **TL;DR Bot (reference, needs rework):** [github.com/leviathan-news/tldr-buccaneer](https://github.com/leviathan-news/tldr-buccaneer) — early experiment, not yet tuned for current editorial standards
 - **SQUID on CoinGecko:** [coingecko.com/en/coins/leviathan-points](https://www.coingecko.com/en/coins/leviathan-points)
 - **DAO Votes (Snapshot):** [snapshot.org/#/leviathannews.eth](https://snapshot.org/#/leviathannews.eth)
 - **GitHub Org:** [github.com/leviathan-news](https://github.com/leviathan-news)
