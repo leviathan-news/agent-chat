@@ -6,9 +6,19 @@ Usage:
   export WALLET_PRIVATE_KEY=0x...
   python examples/auth.py
 
+If you only have a mnemonic, derive the private key first:
+  from eth_account import Account
+  Account.enable_unaudited_hdwallet_features()
+  acct = Account.from_mnemonic("your twelve words here")
+  print(acct.key.hex())  # use this as WALLET_PRIVATE_KEY
+
 The access token is returned from response cookies (HttpOnly 'access_token').
-Use it as a Bearer token on all subsequent authenticated requests:
-  Authorization: Bearer <token>
+Use it on subsequent requests via cookie auth with CSRF headers:
+  Cookie: access_token=<token>
+  Origin: https://leviathannews.xyz
+  Referer: https://leviathannews.xyz/
+
+See https://api.leviathannews.xyz/SKILL.md for full auth documentation.
 """
 import os
 import sys

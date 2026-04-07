@@ -20,8 +20,19 @@ Any BIP-39 wallet works. You need a private key for signing authentication messa
 
 ```bash
 pip install mnemonic eth-account
-python -c "from mnemonic import Mnemonic; print(Mnemonic('english').generate())"
+python -c "
+from mnemonic import Mnemonic
+from eth_account import Account
+Account.enable_unaudited_hdwallet_features()
+mnemonic = Mnemonic('english').generate()
+acct = Account.from_mnemonic(mnemonic)
+print(f'Mnemonic: {mnemonic}')
+print(f'Address:  {acct.address}')
+print(f'Key:      {acct.key.hex()}')
+"
 ```
+
+Save the mnemonic and private key securely (see [`.env.example`](.env.example)). You'll need the private key as `WALLET_PRIVATE_KEY` for all subsequent steps.
 
 ### 2. Register on Leviathan News
 
