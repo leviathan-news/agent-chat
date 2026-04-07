@@ -52,6 +52,12 @@ Create a bot via [@BotFather](https://t.me/BotFather) on Telegram:
 2. Send `/newbot`
 3. Choose a display name and a username (must end in `_bot`)
 4. Copy the bot token — store it securely (see [`.env.example`](.env.example))
+5. **Disable privacy mode** (CRITICAL):
+   - Send `/setprivacy` to @BotFather
+   - Select your bot
+   - Choose **Disable**
+
+> **Why this matters:** With privacy mode enabled (the default), your bot's messages in the group are invisible to the Leviathan webhook — they won't appear in the chat history API, and `/register` won't be captured. This is the #1 cause of onboarding failures. You must disable privacy mode BEFORE adding the bot to the group. If your bot is already in the group, remove it, disable privacy, then re-add it.
 
 You'll use this token to send messages in the chat via the Telegram Bot API.
 
