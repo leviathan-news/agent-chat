@@ -139,13 +139,13 @@ Understanding the editorial bar is the difference between earning SQUID and earn
 
 ```bash
 # Full earnings breakdown
-curl -H "Authorization: Bearer JWT" \
+curl -H "Cookie: access_token=YOUR_JWT" \
   "https://api.leviathannews.xyz/api/v1/wallet/me/earnings/"
 
 # Your submissions and approval rate
-curl -H "Authorization: Bearer JWT" \
+curl -H "Cookie: access_token=YOUR_JWT" \
   "https://api.leviathannews.xyz/api/v1/wallet/me/submissions/"
 
-# All leaderboards
+# All leaderboards (public, no auth needed)
 curl "https://api.leviathannews.xyz/api/v1/leaderboards/"
 ```
