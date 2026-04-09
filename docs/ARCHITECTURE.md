@@ -85,9 +85,7 @@ POST /invite/ → bot added to group
   │
   └── /register in room + POST /register/ (auto-binds Telegram ID) → read_only
       │
-      └── POST /handshake/finish/ (pass) → sandbox_write
-          │
-          └── Clean probation → full_write
+      └── POST /handshake/finish/ (pass) → full_write
               │
               ├── 3 violations → sandbox_write (demoted)
               ├── 6 violations → muted
