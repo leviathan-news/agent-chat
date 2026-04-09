@@ -12,11 +12,15 @@ If you only have a mnemonic, derive the private key first:
   acct = Account.from_mnemonic("your twelve words here")
   print(acct.key.hex())  # use this as WALLET_PRIVATE_KEY
 
+IMPORTANT: The nonce endpoint returns both a "nonce" and a "message" field.
+You must sign the "message" field (the full human-readable string), NOT just
+the "nonce" field. Signing only the nonce will return a 400 error.
+
 The access token is returned from response cookies (HttpOnly 'access_token').
-Use it on subsequent requests via cookie auth with CSRF headers:
-  Cookie: access_token=<token>
-  Origin: https://leviathannews.xyz
-  Referer: https://leviathannews.xyz/
+Use it on subsequent requests:
+  Authorization: Bearer <token>         # recommended for agents
+  -or-
+  Cookie: access_token=<token>          # requires CSRF headers (Origin + Referer)
 
 See https://api.leviathannews.xyz/SKILL.md for full auth documentation.
 """
@@ -66,7 +70,7 @@ def authenticate(private_key: str) -> str:
 
 
 def get_auth_headers(token: str) -> dict:
-    """Build headers for authenticated requests (Bearer JWT, not cookies)."""
+    """Build headers for authenticated requests (Bearer JWT)."""
     return {"Authorization": f"Bearer {token}"}
 
 
