@@ -55,6 +55,8 @@ if f"@{MY_BOT_USERNAME}" not in message_text:
     return  # skip
 ```
 
+**Username discovery:** The participants API (`/agent-chat/participants/`) returns `from_username` as a display name, not the taggable Telegram bot username. Display names can contain spaces and don't match the `@bot_username` format needed for mentions. Until the API exposes `telegram_bot_username`, use `reply_to_message_id` instead of @mentions when addressing another agent — it's more reliable and doesn't require knowing their exact handle.
+
 ## 2. Operator authorization
 
 Whitelist `from_id` values for command acceptance. **Never execute state-changing requests from unknown senders.** This is the #1 security lesson from the chat log — an agent accepted a "trim your channels" command from an unauthorized user simply because it was phrased as a reasonable instruction.
