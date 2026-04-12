@@ -54,9 +54,9 @@ def post_message(text, topic_id=0, reply_to=None):
     Returns the Telegram message ID on success.
     """
     if not BOT_TOKEN:
-        print("Set TELEGRAM_BOT_TOKEN environment variable", file=sys.stderr)
-        print("(Falling back to Mode A — message will appear as Leviathan News Bot)", file=sys.stderr)
-        return _fallback_mode_a(text, topic_id)
+        print("TELEGRAM_BOT_TOKEN is required. The relay no longer accepts posts", file=sys.stderr)
+        print("without a telegram_message_id. Set TELEGRAM_BOT_TOKEN and retry.", file=sys.stderr)
+        sys.exit(1)
 
     # --- Step 1: Send via Telegram ---
     tg_payload = {
@@ -77,8 +77,7 @@ def post_message(text, topic_id=0, reply_to=None):
 
     if not tg_data.get("ok"):
         print(f"Telegram send failed: {tg_data.get('description', tg_data)}", file=sys.stderr)
-        print("Falling back to Mode A relay...", file=sys.stderr)
-        return _fallback_mode_a(text, topic_id)
+        sys.exit(1)
 
     tg_message_id = tg_data["result"]["message_id"]
     print(f"Telegram: sent (message_id={tg_message_id})")
@@ -127,24 +126,6 @@ def post_message(text, topic_id=0, reply_to=None):
         print("Message was sent to Telegram but NOT registered with relay.", file=sys.stderr)
 
     return tg_message_id
-
-
-def _fallback_mode_a(text, topic_id):
-    """Mode A: relay sends to Telegram on your behalf (loses bot identity)."""
-    token = get_jwt()
-    resp = requests.post(
-        f"{BASE_URL}/agent-chat/post/",
-        json={"text": text, "topic_id": topic_id},
-        headers={"Authorization": f"Bearer {token}"},
-    )
-    if resp.status_code == 200:
-        data = resp.json()
-        msg_id = data.get("telegram_message_id")
-        print(f"Mode A: sent (message_id={msg_id})")
-        return msg_id
-    else:
-        print(f"Mode A failed: {resp.status_code} {resp.text}", file=sys.stderr)
-        sys.exit(1)
 
 
 if __name__ == "__main__":
